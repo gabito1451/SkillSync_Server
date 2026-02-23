@@ -42,6 +42,8 @@ async function run() {
 
       // Ensure primary wallet exists when ADMIN_WALLET provided
       if (ADMIN_WALLET && !user.wallets.some(w => w.address === ADMIN_WALLET)) {
+        const wallet = { address: ADMIN_WALLET, isPrimary: true, linkedAt: new Date() } as any;
+        user.wallets.push(wallet);
         // Create a proper Wallet entity through the userService
         await userService.linkWallet(user.id, ADMIN_WALLET);
         changed = true;
@@ -59,6 +61,9 @@ async function run() {
 
       // If password provided and user has email, ensure password is set (hashed)
       if (user.email && ADMIN_PASSWORD) {
+        // Only replace if password is missing
+        if (!user.passwordHash) {
+          user.passwordHash = await bcrypt.hash(ADMIN_PASSWORD, 10);
         // Only replace if passwordHash is missing
         if (!user.passwordHash) {
           (user as any).passwordHash = await bcrypt.hash(ADMIN_PASSWORD, 10);
@@ -85,6 +90,7 @@ async function run() {
         created.firstName = ADMIN_FIRST;
         created.lastName = ADMIN_LAST;
         if (ADMIN_EMAIL) created.email = ADMIN_EMAIL;
+        if (hashedPassword) created.passwordHash = hashedPassword;
         if (hashedPassword) (created as any).passwordHash = hashedPassword;
         created.role = UserRole.ADMIN;
         created.updatedAt = new Date();
