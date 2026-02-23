@@ -1,30 +1,47 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import databaseConfig from './config/database.config';
-import { RedisModule } from './common/redis/redis.module';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './users/users.module';
-import { MentorModule } from './mentors/mentor.module';
-import { MenteeModule } from './mentees/mentees.module';
-import { ReviewModule } from './reviews/reviews.module';
-import { PaymentModule } from './payments/payments.module';
-import { SessionsModule } from './sessions/sessions.module';
-
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { ProfileModule } from './modules/profile/profile.module';
+import { NotificationModule } from './modules/notification/notification.module';
+import { BookingsModule } from './modules/bookings/bookings.module';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { AuditModule } from './modules/audit/audit.module';
+import { ReviewsModule } from './modules/reviews/reviews.module';
+import { RatingsModule } from './modules/ratings/ratings.module';
+import { RedisModule } from './modules/redis/redis.module';
+import { MailModule } from './modules/mail/mail.module';
+import { PaginationModule } from './modules/pagination/pagination.module';
+import { DatabaseModule } from './modules/database/database.module';
+import { ConfigModule } from './config/config.module';
+import { CacheModule } from './common/cache/cache.module';
+import { CommonModule } from './common/common.module';
+import { HealthModule } from './modules/health/health.module';
+import { AvailabilityModule } from './modules/availability/availability.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot(databaseConfig()), // Ensure it returns TypeOrmModuleOptions
+    ConfigModule,
+    DatabaseModule,
+    CacheModule,
+    CommonModule,
+    HealthModule,
     UserModule,
-    MentorModule,
-    MenteeModule,
-    PaymentModule,
-    ReviewModule,
-    RedisModule,
     AuthModule,
-    SessionsModule,
-
+    ProfileModule,
+    NotificationModule,
+    BookingsModule,
+    AvailabilityModule,
+    PaymentsModule,
+    AuditModule,
+    ReviewsModule,
+    RatingsModule,
+    RedisModule,
+    MailModule,
+    PaginationModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
