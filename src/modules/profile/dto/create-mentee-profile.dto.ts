@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsArray, IsEnum, IsNumber, IsTimeZone } from 'class-validator';
+import { IsString, IsOptional, IsArray, IsEnum, IsNumber, IsTimeZone, IsUrl } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { MenteeGoal } from '../entities/mentee-profile.entity';
 
@@ -39,6 +39,15 @@ export class CreateMenteeProfileDto {
   @IsOptional()
   @IsNumber()
   weeklyAvailability?: number;
+
+  @ApiPropertyOptional({
+    description: 'List of portfolio or project URLs',
+    example: ['https://github.com/user', 'https://myproject.dev'],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsUrl({}, { each: true })
+  portfolioLinks?: string[];
 
   @ApiPropertyOptional({ description: 'Profile image URL' })
   @IsOptional()

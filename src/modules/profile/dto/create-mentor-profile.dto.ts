@@ -38,6 +38,15 @@ export class CreateMentorProfileDto {
   @IsUrl()
   portfolioUrl?: string;
 
+  @ApiPropertyOptional({
+    description: 'List of portfolio or project URLs',
+    example: ['https://github.com/user', 'https://myproject.dev'],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsUrl({}, { each: true })
+  portfolioLinks?: string[];
+
   @ApiPropertyOptional({ description: 'Hourly rate' })
   @IsOptional()
   @IsNumber()

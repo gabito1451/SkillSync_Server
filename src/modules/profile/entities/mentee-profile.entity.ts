@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { IsString, IsOptional, IsArray, IsEnum } from 'class-validator';
+import { IsString, IsOptional, IsArray, IsEnum, IsUrl } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { User } from '../../user/entities/user.entity';
 
@@ -66,6 +66,16 @@ export class MenteeProfile {
   @IsOptional()
   @Column({ nullable: true })
   weeklyAvailability?: number;
+
+  @ApiPropertyOptional({
+    description: 'List of portfolio or project URLs',
+    example: ['https://github.com/user', 'https://myproject.dev'],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsUrl({}, { each: true })
+  @Column('text', { array: true, nullable: true })
+  portfolioLinks?: string[];
 
   @ApiPropertyOptional({ description: 'Profile image URL' })
   @IsOptional()

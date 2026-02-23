@@ -57,6 +57,16 @@ export class MentorProfile {
   @Column({ nullable: true })
   portfolioUrl?: string;
 
+  @ApiPropertyOptional({
+    description: 'List of portfolio or project URLs',
+    example: ['https://github.com/user', 'https://myproject.dev'],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsUrl({}, { each: true })
+  @Column('text', { array: true, nullable: true })
+  portfolioLinks?: string[];
+
   @ApiPropertyOptional({ description: 'Hourly rate', example: 50 })
   @IsOptional()
   @IsNumber()
