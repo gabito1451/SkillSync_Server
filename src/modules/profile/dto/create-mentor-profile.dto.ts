@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsArray, IsNumber, IsUrl, IsBoolean } from 'class-validator';
+import { IsString, IsOptional, IsArray, IsNumber, IsUrl, IsBoolean, IsTimeZone } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateMentorProfileDto {
@@ -52,4 +52,12 @@ export class CreateMentorProfileDto {
   @IsOptional()
   @IsBoolean()
   isAvailable?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'IANA timezone identifier (e.g. "America/New_York", "Europe/London")',
+    example: 'America/New_York',
+  })
+  @IsOptional()
+  @IsTimeZone()
+  timezone?: string;
 }

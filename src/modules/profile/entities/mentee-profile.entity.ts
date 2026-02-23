@@ -77,6 +77,13 @@ export class MenteeProfile {
   @Column({ default: true })
   isSeekingMentor: boolean;
 
+  @ApiPropertyOptional({
+    description: 'IANA timezone identifier for the mentee (e.g. "America/New_York")',
+    example: 'America/New_York',
+  })
+  @Column({ type: 'varchar', default: 'UTC' })
+  timezone: string;
+
   @ApiProperty({ description: 'Profile creation date' })
   @CreateDateColumn()
   createdAt: Date;
