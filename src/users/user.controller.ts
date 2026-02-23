@@ -8,9 +8,9 @@ import {
   Delete,
   UseInterceptors,
 } from '@nestjs/common';
-import { UserService } from './providers/user.service';
-import { CreateUserDto } from './dto/createUser.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from '../providers/user.service';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
